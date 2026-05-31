@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Fullstack Ecosystem — Program Details</title>
+    <style>
+        /* Base Reset & Variables */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; padding-bottom: 60px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background-color: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 20px 0; position: sticky; top: 0; z-index: 100; }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { background-color: #eff6ff; color: #2563eb; font-size: 12px; padding: 4px 10px; border-radius: 9999px; font-weight: 600; border: 1px solid #bfdbfe; }
+        .date-badge { background-color: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 40px 0 30px; }
+        h1 { font-size: 32px; color: #0f172a; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .subtitle { font-size: 18px; color: #64748b; max-width: 700px; margin: 0 auto 10px; }
+        .start-line { font-size: 16px; color: #dc2626; font-weight: 700; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        
+        /* Video Player Wrapper */
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border: 4px solid #ffffff; margin-bottom: 15px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-caption { text-align: center; font-size: 14px; color: #475569; font-weight: 500; margin-bottom: 40px; }
+
+        /* Model Callout Box */
+        .model-callout { background: linear-gradient(to right, #f0fdf4, #ecfdf5); border-left: 4px solid #10b981; padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 40px; display: flex; flex-direction: column; gap: 8px; }
+        .model-title { font-weight: 700; color: #065f46; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+
+        /* Tech Stack Table */
+        .stack-section { background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; margin-bottom: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .section-title { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 24px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .stack-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .stack-table th { background-color: #f1f5f9; color: #475569; font-weight: 600; text-align: left; padding: 12px 16px; border: 1px solid #e2e8f0; font-size: 14px; }
+        .stack-table td { padding: 16px; border: 1px solid #e2e8f0; font-size: 15px; vertical-align: top; background-color: #fff; }
+        .tech-tag { display: inline-block; background-color: #f1f5f9; color: #334155; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; margin: 2px; border: 1px solid #e2e8f0; }
+
+        /* Phase Separator */
+        .phase-divider { background-color: #0f172a; color: #ffffff; padding: 12px 20px; border-radius: 8px; font-weight: 700; font-size: 16px; margin: 35px 0 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Curriculum Timeline Cards */
+        .curriculum-section { margin-bottom: 40px; }
+        .week-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .week-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px; }
+        .week-title { font-size: 18px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 10px; }
+        .week-number { background-color: #2563eb; color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .syntax-badge { font-size: 14px; color: #64748b; font-weight: 500; max-width: 70%; text-align: right; }
+        
+        /* Execution Split columns */
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .split-col { background-color: #f8fafc; padding: 16px; border-radius: 8px; border: 1px dashed #e2e8f0; }
+        .col-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .label-trainer { color: #d97706; }
+        .label-student { color: #059669; }
+        .split-text { font-size: 14px; color: #334155; }
+
+        /* Pricing & Action Gateway */
+        .gateway-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border-radius: 16px; padding: 40px; text-align: center; box-shadow: 0 20px 25px -5px rgba(15,23,42,0.2); margin-top: 50px; }
+        .price-label { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 600; margin-bottom: 8px; }
+        .price-value { font-size: 42px; font-weight: 800; color: #ffffff; margin-bottom: 15px; }
+        .price-inclusions { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; padding: 15px; border-top: 1px solid #334155; border-bottom: 1px solid #334155; font-size: 14px; color: #cbd5e1; }
+        .inclusion-item { display: flex; align-items: center; gap: 6px; }
+        .inclusion-item span { color: #38bdf8; font-weight: bold; }
+        
+        .gateway-instruction { max-width: 550px; margin: 0 auto 25px; font-size: 15px; color: #94a3b8; }
+        
+        /* Direct Action Button */
+        .cta-button { display: inline-block; background-color: #38bdf8; color: #0f172a; font-size: 16px; font-weight: 700; text-decoration: none; padding: 18px 36px; border-radius: 8px; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4); transition: all 0.2s ease-in-out; text-transform: uppercase; letter-spacing: 0.5px; }
+        .cta-button:hover { background-color: #7dd3fc; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6); }
+        .cta-button:active { transform: translateY(0); }
+
+        /* Responsive Layout Overrides */
+        @media (max-width: 768px) {
+            h1 { font-size: 26px; }
+            .subtitle { font-size: 15px; }
+            .stack-table, .stack-table tbody, .stack-table tr, .stack-table td, .stack-table th { display: block; width: 100%; }
+            .stack-table tr { margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+            .stack-table th { border: none; }
+            .stack-table td { border: none; border-top: 1px solid #e2e8f0; }
+            .week-header { flex-direction: column; gap: 8px; }
+            .syntax-badge { text-align: left; max-width: 100%; }
+            .split-grid { grid-template-columns: 1fr; gap: 12px; }
+            .gateway-card { padding: 30px 20px; }
+            .price-value { font-size: 32px; }
+            .cta-button { width: 100%; font-size: 14px; padding: 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Zone -->
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="Iconi Hub Logo.png" alt="Iconic Hub Logo" style="width:40px; height:auto;">
+                    <span>Iconic Hub</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <div class="badge">12-Week Cohort</div>
+                <div class="badge date-badge">📅 Starts June 15th, 2026</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Hero Zone (The Hook) -->
+        <section class="hero">
+            <h1>Java Full-Stack Web Development Syllabus</h1>
+            <p class="subtitle">Accelerated Scratch-to-Advanced engineering track. Go from structural console architectures to multi-profile cloud deployment patterns.</p>
+            <div class="start-line">🚀 Next Live Cohort Operations Begin: June 15th, 2026</div>
+            
+            <!-- Video Presentation Component -->
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID/preview" width="100%" height="400" allow="autoplay"></iframe>
+            </div>
+            <p class="video-caption">💡 Watch this framework execution demo layout before exploring the complete operational roadmap below.</p>
+        </section>
+
+        <!-- Dynamic Success Architecture Callout -->
+        <div class="model-callout">
+            <div class="model-title">🛡️ The 70%-80% Learner Success Framework (The 50/50 Rule)</div>
+            <p class="split-text">Retention Strategy Model Schedule: <strong>3 Days/Week (Mon, Wed, Fri) | 2 Hours per Session | 12 Weeks Total (72 Hours)</strong>.</p>
+            <p class="split-text" style="font-size: 13px; color: #475569;">To keep absorption high, every single session is split in half: Hour 1 features Live Code-Alongs (no pre-written slides), and Hour 2 guarantees immediate Practical Implementation with active support.</p>
+        </div>
+
+        <!-- Technical Validation Matrix -->
+        <section class="stack-section">
+            <div class="section-title">🚀 Complete Industrial Stack Matrix</div>
+            <table class="stack-table">
+                <thead>
+                    <tr>
+                        <th style="width: 33.33%;">Core Java & Backend Architecture</th>
+                        <th style="width: 33.33%;">Modern Web UI & React Framework</th>
+                        <th style="width: 33.33%;">Databases & Cloud Engineering</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="tech-tag">Java 21</span>
+                            <span class="tech-tag">OOPs Design</span>
+                            <span class="tech-tag">Java Collections</span>
+                            <span class="tech-tag">Spring Boot 3.x</span>
+                            <span class="tech-tag">Spring Data JPA</span>
+                            <span class="tech-tag">Spring Security</span>
+                        </td>
+                        <td>
+                            <span class="tech-tag">Semantic HTML5 & CSS Grid</span>
+                            <span class="tech-tag">Modern ES6+ JavaScript</span>
+                            <span class="tech-tag">ReactJS Architecture</span>
+                            <span class="tech-tag">Vite Automation</span>
+                            <span class="tech-tag">Axios Integration</span>
+                            <span class="tech-tag">State Synchronization</span>
+                        </td>
+                        <td>
+                            <span class="tech-tag">RDBMS Fundamentals</span>
+                            <span class="tech-tag">MySQL / PostgreSQL</span>
+                            <span class="tech-tag">Relational Schemas</span>
+                            <span class="tech-tag">Multi-Table JOINS</span>
+                            <span class="tech-tag">Docker Containerization</span>[cite: 1]
+                            <span class="tech-tag">Cloud Production JARs</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Course Curriculum Engine -->
+        <section class="curriculum-section">
+            <div class="section-title">📂 Complete Execution Framework Roadmap</div>
+            
+            <!-- PHASE 1 -->
+            <div class="phase-divider">Phase 1: Core Backend Foundations & Relational Databases (Weeks 1-4)</div>
+
+            <!-- Week 1 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 1</span> Basics & Setup</div>
+                    <div class="syntax-badge">JDK, IntelliJ, Primitives, Loops, Arrays, & Functions</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer codes a terminal-based "Comprehensive Payroll & Grade Analyzer Engine" with custom scanner filters and condition layers.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Build a multi-bracket salary calculation logic and code a console-driven ATM simulator containing looping validation controls.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 2</span> Object-Oriented Programming (OOPS)</div>
+                    <div class="syntax-badge">Instantiation, Encapsulation, Inheritance, & Interfaces</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer models an enterprise-level "Banking Domain Account Registry" schema matching modular OOP patterns and strict abstractions.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Design parameterized Book constructors, build Manager/Developer custom multipliers, and formulate abstract e-commerce Product rules.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 3</span> Java Collections & Exceptions</div>
+                    <div class="syntax-badge">ArrayList, HashSet, HashMap Core Architecture, Try-Catch</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Build an in-memory "Student Performance Tracking Ledger" leveraging collection pipelines and custom intercepting wrappers.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Write automated inventory mutation loops, craft multi-string duplicate processing cleaners, and build a word frequency analyzer.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 4</span> Relational Databases (RDBMS)</div>
+                    <div class="syntax-badge">MySQL/PostgreSQL, DDL/DML Scripting, Complex JOINS & Aggregates</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer provisions an industrial 3-table data architecture schema (Users, Orders, Products) mapping relational keys.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Generate constraints manually, modify database safety stock values, and write query aggregation routines to filter high-value buyers.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 2 -->
+            <div class="phase-divider">Phase 2: Enterprise Backend Engineering via Spring Boot (Weeks 5-8)</div>
+
+            <!-- Week 5 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 5</span> Spring Core Bootstrapping</div>
+                    <div class="syntax-badge">Maven Architectures, IoC Containers, Dependency Injection</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer scaffolds a corporate application scaffolding layer, resolving bean dependencies instantly via automatic annotations.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Configure dynamic multi-profile layouts (Dev/Prod properties updates) and construct a decoupled structural NotificationEngine module.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 6</span> Stateless RESTful Web APIs</div>
+                    <div class="syntax-badge">HTTP Verbs, @RestController, Request Handlers, Postman Suite</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer builds out a live stateless REST endpoint suite for a unified system "Task Tracker App" validated using Postman testing collections.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Construct Product Catalog endpoints, perform input query parameter parsing, and map assertion checks for 201 Created responses.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 7</span> Spring Data JPA & ORM</div>
+                    <div class="syntax-badge">Entity Modeling, JpaRepository Framework, Custom Finder Queries</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer migrates the isolated in-memory collection layout onto persistent MySQL database systems using entity relations.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Generate persistent mapping files, code zero-code repository CRUD calls, and deploy tailored @Query tracking logic.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 8</span> Advanced Web Filters & Security</div>
+                    <div class="syntax-badge">Hibernate Validator, Centralized Exceptions, Filter Chains</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer applies explicit payload validation rules, wires standard @RestControllerAdvice structures, and introduces basic authorization checks.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Enforce model pattern fields, build structural JSON ResourceNotFound schemas, and set 403 Forbidden blockers to defend critical admin targets.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 3 -->
+            <div class="phase-divider">Phase 3: Modern Client-Side Development & Full-Stack Integration (Weeks 9-12)</div>
+
+            <!-- Week 9 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 9</span> Client UI Foundations</div>
+                    <div class="syntax-badge">HTML5, Layout Engineering (Flexbox/Grid), ES6+ Engines, Async/Await</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer codes a fully responsive multi-device product matrix template fetching external data feeds asynchronously.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Style grid component tiles without external dependencies, filter raw list arrays via modern ES6 logic, and handle fetch timeouts gracefully.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 10</span> ReactJS Client Architecture</div>
+                    <div class="syntax-badge">Vite Projects, JSX, Virtual DOM Componentization, Hooks (useState, useEffect)</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer demonstrates clean virtual component isolation, reactive single-direction data bindings, and asynchronous mounting hooks.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Create component layout cards driven by props, build dynamic To-Do state modifications, and display conditional loader elements cleanly.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 11</span> Full-Stack Client-Server Integration</div>
+                    <div class="syntax-badge">Axios Clients, Cross-Origin Routing (CORS), State Synchronization</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer connects the ReactJS application interface straight to operational Spring Boot REST endpoints for end-to-end processing.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Configure server cross-origin safe listing profiles, map React controller inputs to build secure network JSON payloads, and refresh frontend data arrays instantly.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 12 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title"><span class="week-number">Week 12</span> Cloud Production Deployment</div>
+                    <div class="syntax-badge">Spring JAR Compilation, React Builds, Cloud Hosting, Capstone Repository</div>
+                </div>
+                <div class="split-grid">
+                    <div class="split-col">
+                        <div class="col-label label-trainer">⏳ Hour 1: Live Code-Along Task</div>
+                        <div class="split-text">Trainer executes production application bundling, generating standalone backend JAR records and optimized distribution outputs.</div>
+                    </div>
+                    <div class="split-col">
+                        <div class="col-label label-student">💻 Hour 2: Learner Active Practice</div>
+                        <div class="split-text">Trigger compressed directory compilation steps, deploy live servers onto cloud environments, format a README.md overview document, and launch to public GitHub repositories.</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Final Gate Validation & Action Core -->
+        <section class="gateway-card">
+            <div class="price-label">Program Investment Matrix</div>
+            <div class="price-value">₹3,999</div>
+            
+            <div class="price-inclusions">
+                <div class="inclusion-item"><span>✓</span> 72 Hours Full Framework Track</div>
+                <div class="inclusion-item"><span>✓</span> Live Batch Starting June 15th, 2026</div>
+                <div class="inclusion-item"><span>✓</span> Capstone Production Source Code Access</div>
+            </div>
+
+            <p class="gateway-instruction">
+                Ready to confirm your program seat for the June 15th cohort? Click below to navigate straight to your verification checklist form to finalize your application data footprint.
+            </p>
+
+            <!-- Change the href target below to your actual 2nd Google Form Confirmation URL link -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfYourActualFormIDHere/viewform?usp=sf_link" target="_blank" class="cta-button">
+                Yes, I have reviewed the details — Confirm My Seat
+            </a>
+        </section>
+
+    </div>
+
+</body>
+</html>
